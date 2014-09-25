@@ -10,7 +10,7 @@
 
 ## 使用方法
 
-1. 初始化wechat-share
+### 初始化wechat-share
 
 ```
 wechatShare.ini();
@@ -18,7 +18,7 @@ wechatShare.ini();
 
 你也可以在ini方法中直接传入`appId`。
 
-2. 更新分享内容
+### 更新分享内容
 
 ```
 wechatShare.update({
