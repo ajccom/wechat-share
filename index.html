@@ -74,6 +74,7 @@ input {border: 1px solid #007e47}
           log('blur; name: ' + this.name + '; value: ' + this.value);
           var v = this.value;
           item[this.name] = function () {
+            log(v + '!!!!');
             document.body.className = v;
           }
         }
