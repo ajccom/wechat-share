@@ -1,5 +1,14 @@
 "use strict"
 ;(function () {
+  var extend = function (a, b) {
+    var i = '';
+    b = b || {};
+    for (i in b) {
+      a[i] = b[i];
+    }
+    return a;
+  };
+  
   var wechatShare = {
     dataForWeixin: {
       appId: '',
@@ -12,7 +21,7 @@
       callback: null
     },
     update: function (arg) {
-      this.dataForWeixin = $.extend(this.dataForWeixin, arg || {});
+      this.dataForWeixin = extend(this.dataForWeixin, arg || {});
     },
     _shareFriend: function () {
       WeixinJSBridge.invoke('sendAppMessage', {

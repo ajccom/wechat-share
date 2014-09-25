@@ -53,21 +53,28 @@ input {border: 1px solid #007e47}
   window.addEventListener('load', function () {
     wechatShare.ini();
   });
-  document.getElementsByTagName('input').addEventListener('blur', function () {
-    var item = {};
-    log('blur; name: ' + this.name + '; value: ' + this.value);
-    if (this.type === 'text' && this.value !== '') {
-      item[this.name] = this.value;
-    } else {
-      if (this.checked) {
-        var v = this.value;
-        item[this.name] = function () {
-          document.body.className = v;
+  
+  var inputs = document.getElementsByTagName('input'),
+      i = 0,
+      l = inputs.length;
+  for (i; i < l; i++) {
+    inputs[i].addEventListener('blur', function () {
+      var item = {};
+      log('blur; name: ' + this.name + '; value: ' + this.value);
+      if (this.type === 'text' && this.value !== '') {
+        item[this.name] = this.value;
+      } else {
+        if (this.checked) {
+          var v = this.value;
+          item[this.name] = function () {
+            document.body.className = v;
+          }
         }
       }
-    }
-    wechatShare.update(item);
-  });
+      wechatShare.update(item);
+    });
+  }
+  
 </script>
 
 </body>
