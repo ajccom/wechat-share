@@ -58,12 +58,17 @@ input {border: 1px solid #007e47}
       i = 0,
       l = inputs.length;
   for (i; i < l; i++) {
-    inputs[i].addEventListener('blur', function () {
-      var item = {};
-      log('blur; name: ' + this.name + '; value: ' + this.value);
-      if (this.type === 'text' && this.value !== '') {
-        item[this.name] = this.value;
-      } else {
+    if (inputs[i].type === 'text') {
+      inputs[i].addEventListener('blur', function () {
+        var item = {};
+        log('blur; name: ' + this.name + '; value: ' + this.value);
+        if (this.value !== '') {
+          item[this.name] = this.value;
+        }
+        wechatShare.update(item);
+      });
+    } else {
+      inputs[i].addEventListener('change', function () {
         if (this.checked) {
           var v = this.value;
           item[this.name] = function () {
@@ -71,8 +76,7 @@ input {border: 1px solid #007e47}
           }
         }
       }
-      wechatShare.update(item);
-    });
+    }
   }
   
 </script>
