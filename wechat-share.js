@@ -1,6 +1,6 @@
 "use strict"
 ;(function () {
-  wechatShare = {
+  var wechatShare = {
     dataForWeixin: {
       appId: '',
       img: 'http://tips.wechat.com/wechatportal/img/logo.png',
