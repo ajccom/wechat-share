@@ -11,6 +11,7 @@
 <script src="wechat-share.js"></script>
 </head>
 <body>
+<div id="msg"></div>
 <h1>WECHAT SHARE</h1>
 <p>点击右上角可以进行分享哦</p>
 <h3>可配置参数：</h3>
@@ -36,6 +37,7 @@
   <label>回调函数：</label><label><input type="checkbox" value="white" name="callback" />变白色</label><label><input type="checkbox" value="black" name="callback" />变黑色</label>
 </div>
 <style>
+#msg {position: fixed; max-height: 2.8em; overflow: hidden; line-height: 1.4em; top: 0; left: 0; z-index: 2; width: 100%; background: rgba(0, 0, 0, 0.6); color: #fff}
 input {border: 1px solid #007e47}
 .white {color: #000; background: #fff;}
 .white input {color: #000; background: #fff;}
@@ -43,11 +45,17 @@ input {border: 1px solid #007e47}
 .black input {color: #fff; background: #000;}
 </style>
 <script>
+  var log = function (s) {
+    var obj = document,getElementById('msg');
+    obj.innerHTML = '<div>' + s + '</div>' + obj.innerHTML;
+  }
+
   window.addEventListener('load', function () {
     wechatShare.ini();
   });
   document.getElementsByTagName('input').addEventListener('blur', function () {
     var item = {};
+    log('blur; name: ' + this.name + '; value: ' + this.value);
     if (this.type === 'text' && this.value !== '') {
       item[this.name] = this.value;
     } else {
