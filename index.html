@@ -48,7 +48,7 @@ input {border: 1px solid #007e47}
   });
   document.getElementsByTagName('input').addEventListener('blur', function () {
     var item = {};
-    if (this.type === 'text') {
+    if (this.type === 'text' && this.value !== '') {
       item[this.name] = this.value;
     } else {
       if (this.checked) {
