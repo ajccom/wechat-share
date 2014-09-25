@@ -29,6 +29,7 @@ wechatShare.update({
 ```
 
 参数中可配置项：
+
 key | value(默认值) | 说明
 ---- | ---- | ----
 appId | 空 | 选填内容，默认为空
