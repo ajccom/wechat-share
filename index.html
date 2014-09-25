@@ -69,7 +69,9 @@ input {border: 1px solid #007e47}
       });
     } else {
       inputs[i].addEventListener('change', function () {
+        var item = {};
         if (this.checked) {
+          log('blur; name: ' + this.name + '; value: ' + this.value);
           var v = this.value;
           item[this.name] = function () {
             document.body.className = v;
