@@ -41,7 +41,7 @@ title | I get the wechat-share.js, share to u. | 分享的文案
 desc | wechat share, good job! | 分享的文案
 callback | null | 分享弹出后的回调
 
-***强烈建议`titile`和`desc`填写一致的内容***
+***为了同步分享的文案，建议`title`和`desc`填写一致的内容***
 
 --------------------------------------------
 
