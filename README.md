@@ -29,8 +29,8 @@ wechatShare.update({
 ```
 
 参数中可配置项：
-|| key || value(默认值) || 说明 ||
-|| appId ||  || 选填内容，默认为空 ||
+|| *key* || *value(默认值)* || *说明* ||
+|| appId || 空 || 选填内容，默认为空 ||
 || img || http://tips.wechat.com/wechatportal/img/logo.png || 图片链接 ||
 || img_width || 215 || 图片宽度 ||
 || img_height || 80 || 图片高度 ||
