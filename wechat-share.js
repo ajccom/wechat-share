@@ -1,89 +1,62 @@
 "use strict"
 ;(function () {
   var extend = function (a, b) {
-    var i = '';
-    b = b || {};
+    var i = ''
+    b = b || {}
     for (i in b) {
-      a[i] = b[i];
+      a[i] = b[i]
     }
-    return a;
-  };
+    return a
+  }
   
   var wechatShare = {
     dataForWeixin: {
-      appId: '',
-      img: 'http://tips.wechat.com/wechatportal/img/logo.png',
-      img_width: '215',
-      img_height: '80',
-      url: location.href,
+      imgUrl: 'http://tips.wechat.com/wechatportal/img/logo.png',
+      link: location.href,
       title: 'I get the wechat-share.js, share to u.',
       desc: 'wechat share, good job!',
-      callback: null
-    },
-    update: function (arg) {
-      this.dataForWeixin = extend(this.dataForWeixin, arg || {});
-    },
-    _shareFriend: function () {
-      WeixinJSBridge.invoke('sendAppMessage', {
-        'appid': this.dataForWeixin.appid,
-        'img_url': this.dataForWeixin.img,
-        'img_width': this.dataForWeixin.img_width,
-        'img_height': this.dataForWeixin.img_height,
-        'link': this.dataForWeixin.url,
-        'desc': this.dataForWeixin.desc,
-        'title': this.dataForWeixin.title
-      }, this.dataForWeixin.callback);
-    },
-    _shareTimeline: function () {
-      WeixinJSBridge.invoke('shareTimeline', {
-        'img_url': this.dataForWeixin.img,
-        'img_width': this.dataForWeixin.img_width,
-        'img_height': this.dataForWeixin.img_height,
-        'link': this.dataForWeixin.url,
-        'desc': this.dataForWeixin.desc,
-        'title': this.dataForWeixin.title
-      }, this.dataForWeixin.callback);
-    },
-    _shareWeibo: function () {
-      WeixinJSBridge.invoke('shareWeibo', {
-        'content': this.dataForWeixin.desc,
-        'url': this.dataForWeixin.url
-      }, this.dataForWeixin.callback);
-    },
-    _addListener: function () {
-      var that = this;
-      WeixinJSBridge.on('menu:share:appmessage', function(argv){
-        that._shareFriend();
-      });
-      WeixinJSBridge.on('menu:share:timeline', function(argv){
-        that._shareTimeline();
-      });
-      WeixinJSBridge.on('menu:share:weibo', function(argv){
-        that._shareWeibo();
-      });
-    },
-    bind: function () {
-      var that = this;
-      if (document.addEventListener) {
-        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-          that._addListener();
-        }, false);
-      } else {
-        document.attachEvent('WeixinJSBridgeReady', function onBridgeReady() {
-          that._addListener();
-        });
-        document.attachEvent('onWeixinJSBridgeReady', function onBridgeReady() {
-          that._addListener();
-        });
+      dataUrl: '',
+      success: function () { 
+          // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+          // 用户取消分享后执行的回调函数
       }
     },
-    ini: function (appId) {
-      this.update({
-        appId: typeof appId === 'string' ? appId : '' 
-      });
-      this.bind();
+    update: function (arg) {
+      this.dataForWeixin = extend(this.dataForWeixin, arg || {})
+    },
+    _addListener: function () {
+      wx.onMenuShareAppMessage(this.dataForWeixin)
+      wx.onMenuShareTimeline(this.dataForWeixin)
+      wx.onMenuShareQQ(this.dataForWeixin)
+      wx.onMenuShareWeibo(this.dataForWeixin)
+    },
+    bind: function () {
+      var that = this
+      if (wx && wx.ready) {
+        wx.ready(function(){
+          that._addListener()
+        })
+      }
+    },
+    ini: function (appId, timestamp, nonceStr, signature) {
+      var s = document.createElement('script')
+      s.src = '//res.wx.qq.com/open/js/jweixin-1.0.0.js'
+      document.head.appendChild(s)
+      if (!window.wx || typeof appId === '' || typeof timestamp === '' || typeof nonceStr === '' || typeof signature === '') {return}
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: appId, // 必填，公众号的唯一标识
+        timestamp: timestamp, // 必填，生成签名的时间戳
+        nonceStr: nonceStr, // 必填，生成签名的随机串
+        signature: signature,// 必填，签名，见附录1
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+      })
+      this.bind()
     }
-  };
+  }
   
-  window.wechatShare = wechatShare;
-}());
+  window.wechatShare = wechatShare
+  
+}())
