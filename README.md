@@ -17,7 +17,7 @@ wechatShare.ini(appid, nonceStr, timestamp, signature);
 - timestamp: 生成签名的时间戳;
 - signature: 生成的签名;
 
-#### 微信的JS SDK使用过程中，不仅需要公众号ID、设置安全域名，还需要后台帮忙用一个随机串和时间戳SHA1算法生成签名（[查看文档](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.89.EF.BC.9A.E9.80.9A.E8.BF.87config.E6.8E.A5.E5.8F.A3.E6.B3.A8.E5.85.A5.E6.9D.83.E9.99.90.E9.AA.8C.E8.AF.81.E9.85.8D.E7.BD.AE)），在初始化时需要将用于生成签名的随机串、时间戳以及生成的签名给到初始化函数。
+#### 微信的JS SDK使用过程中，不仅需要公众号ID、设置安全域名，还需要后台帮忙用一个随机串和时间戳，通过SHA1算法生成签名（[查看文档](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.89.EF.BC.9A.E9.80.9A.E8.BF.87config.E6.8E.A5.E5.8F.A3.E6.B3.A8.E5.85.A5.E6.9D.83.E9.99.90.E9.AA.8C.E8.AF.81.E9.85.8D.E7.BD.AE)），在初始化时需要将用于生成签名的随机串、时间戳以及生成的签名给到初始化函数。
 
 ### 更新分享内容
 
@@ -40,8 +40,8 @@ imgUrl | http://tips.wechat.com/wechatportal/img/logo.png | 图片链接
 link | location.href | 分享地址
 title | I get the wechat-share.js, share to u. | 分享标题
 desc | wechat share, good job! | 分享的文案
-success | null | 分享成功后的回调
-cancel | null | 取消分享后的回调
+success | 空函数 | 分享成功后的回调
+cancel | 空函数 | 取消分享后的回调
 
 ***为了同步分享的文案，建议`title`和`desc`填写一致的内容***
 
