@@ -2,10 +2,6 @@
 
 一个用于微信分享的小工具
 
-## 查看DEMO
-
-![](qr.png)
-
 ------------------------
 
 ## 使用方法
@@ -13,16 +9,23 @@
 ### 初始化wechat-share
 
 ```
-wechatShare.ini();
+wechatShare.ini(appid, nonceStr, timestamp, signature);
 ```
 
-你也可以在ini方法中直接传入`appId`。
+- appid: 公众号ID/应用ID;
+- nonceStr: 生成签名的随即串;
+- timestamp: 生成签名的时间戳;
+- signature: 生成的签名;
+
+#### 微信的JS SDK使用过程中，不仅需要公众号ID、设置安全域名，还需要后台帮忙用一个随机串和时间戳SHA1算法生成签名（[查看文档](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.89.EF.BC.9A.E9.80.9A.E8.BF.87config.E6.8E.A5.E5.8F.A3.E6.B3.A8.E5.85.A5.E6.9D.83.E9.99.90.E9.AA.8C.E8.AF.81.E9.85.8D.E7.BD.AE)），在初始化时需要将用于生成签名的随机串、时间戳以及生成的签名给到初始化函数。
 
 ### 更新分享内容
 
+想要更改分享内容，执行update即可
+
 ```
 wechatShare.update({
-  img: '...',
+  imgUrl: '...',
   title: '...',
   ...
 });
@@ -32,14 +35,13 @@ wechatShare.update({
 
 key | value(默认值) | 说明
 ---- | ---- | ----
-appId | 空 | 选填内容，默认为空
-img | http://tips.wechat.com/wechatportal/img/logo.png | 图片链接
-img_width | 215 | 图片宽度
-img_height | 80 | 图片高度
-url | location.href | 分享地址
-title | I get the wechat-share.js, share to u. | 分享的文案
+appId | 空 | 帐号ID
+imgUrl | http://tips.wechat.com/wechatportal/img/logo.png | 图片链接
+link | location.href | 分享地址
+title | I get the wechat-share.js, share to u. | 分享标题
 desc | wechat share, good job! | 分享的文案
-callback | null | 分享弹出后的回调
+success | null | 分享成功后的回调
+cancel | null | 取消分享后的回调
 
 ***为了同步分享的文案，建议`title`和`desc`填写一致的内容***
 

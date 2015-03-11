@@ -40,10 +40,10 @@
         })
       }
     },
-    ini: function (appId, timestamp, nonceStr, signature) {
+    ini: function (appId, nonceStr, timestamp, signature) {
       var s = document.createElement('script')
       s.src = '//res.wx.qq.com/open/js/jweixin-1.0.0.js'
-      document.head.appendChild(s)
+      document.body.appendChild(s)
       if (!window.wx || typeof appId === '' || typeof timestamp === '' || typeof nonceStr === '' || typeof signature === '') {return}
       wx.config({
         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -60,3 +60,6 @@
   window.wechatShare = wechatShare
   
 }())
+
+
+
