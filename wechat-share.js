@@ -47,7 +47,7 @@
       }
     },
     ini: function (appId, nonceStr, timestamp, signature) {
-      if (typeof appId === '' || typeof timestamp === '' || typeof nonceStr === '' || typeof signature === '') {return}
+      if (typeof signature === 'undefined' || typeof timestamp === 'undefined' || typeof nonceStr === 'undefined' || typeof appId === 'undefined') {return}
       
       if (!window.wx && !isAppend) {
         var s = document.createElement('script')
