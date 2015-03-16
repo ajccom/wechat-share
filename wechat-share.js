@@ -75,5 +75,5 @@
   }
   
   window.wechatShare = wechatShare
-  
+
 }())
