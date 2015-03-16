@@ -1,5 +1,6 @@
 "use strict"
 ;(function () {
+
   var extend = function (a, b) {
     var i = ''
     b = b || {}
@@ -9,7 +10,12 @@
     return a
   }
   
+  var isAppend = false
+  
   var wechatShare = {
+    isInWechat: function () {
+      return /MicroMessenger/i.test(navigator.userAgent)
+    },
     dataForWeixin: {
       imgUrl: 'http://tips.wechat.com/wechatportal/img/logo.png',
       link: location.href,
@@ -41,27 +47,33 @@
       }
     },
     ini: function (appId, nonceStr, timestamp, signature) {
-      if (!window.wx) {
+      if (typeof appId === '' || typeof timestamp === '' || typeof nonceStr === '' || typeof signature === '') {return}
+      
+      if (!window.wx && !isAppend) {
         var s = document.createElement('script')
         s.src = '//res.wx.qq.com/open/js/jweixin-1.0.0.js'
         document.body.appendChild(s)
+        isAppend = true
       }
-      if (!window.wx || typeof appId === '' || typeof timestamp === '' || typeof nonceStr === '' || typeof signature === '') {return}
-      wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: appId, // 必填，公众号的唯一标识
-        timestamp: timestamp, // 必填，生成签名的时间戳
-        nonceStr: nonceStr, // 必填，生成签名的随机串
-        signature: signature,// 必填，签名，见附录1
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
-      })
-      this.bind()
+      
+      if (!window.wx) {
+        setTimeout(function () {
+          wechatShare.ini(appId, nonceStr, timestamp, signature)
+        }, 1000)
+      } else {
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: appId, // 必填，公众号的唯一标识
+          timestamp: timestamp, // 必填，生成签名的时间戳
+          nonceStr: nonceStr, // 必填，生成签名的随机串
+          signature: signature,// 必填，签名，见附录1
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+        })
+        this.bind()
+      }
     }
   }
   
   window.wechatShare = wechatShare
   
 }())
-
-
-
